@@ -1,0 +1,22 @@
+---------****** BENCHMARKING *******---------
+
+SSH into namenode and switch to hdfs
+$ sudo su - hdfs
+
+---*** Test with terasort ***---
+
+hadoop jar /usr/hdp/2.3.6.0-3796/hadoop-mapreduce/hadoop-mapreduce-examples-*.jar teragen 500000 random-data
+
+hadoop jar /usr/hdp/2.3.6.0-3796/hadoop-mapreduce/hadoop-mapreduce-examples-*.jar terasort random-data sorted-data
+
+
+---*** Benchmark the I/O speed with TestDFSIO ***---
+
+hadoop jar /usr/hdp/2.3.6.0-3796/hadoop-mapreduce/hadoop-mapreduce-client-jobclient-tests.jar TestDFSIO -write -nrFiles 10 -fileSize 50MB
+
+hadoop jar /usr/hdp/2.3.6.0-3796/hadoop-mapreduce/hadoop-mapreduce-client-jobclient-tests.jar TestDFSIO -read -nrFiles 10 -fileSize 50MB
+
+hadoop jar /usr/hdp/2.3.6.0-3796/hadoop-mapreduce/hadoop-mapreduce-client-jobclient-tests.jar TestDFSIO -clean
+
+
+
